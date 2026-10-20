@@ -1,0 +1,22 @@
+{
+  "schema": "rig-hydraulics/1",
+  "network_id": "hose-height-rig-v1",
+  "provenance": "synthetic pretraining geometry, NOT measured apparatus",
+  "calibrated_on_observations": false,
+  "tank_area_m2": [0.012, 0.016],
+  "tank_datum_m": [0.20, 0.19],
+  "hose_coefficient_m2_5_s": [0.000010, 0.000009, 0.000011, 0.000010],
+  "domain": {
+    "duration_s": 60.0,
+    "initial_volume_ml": [1200.0, 2400.0],
+    "outlet_height_m": [0.10, 0.45],
+    "open_mask": [0, 1]
+  },
+  "assumptions": [
+    "Constant outlet height and open/closed setting within each run; no refills or receiver drainage.",
+    "Primed water-filled hoses, quasi-steady lumped discharge q = k*sqrt(max(surface-outlet,0)).",
+    "k includes effective area, gravity and aggregate losses; not a universal hose constant.",
+    "No pump, siphon priming/air ingress, hose deformation, inertia, leakage or water hammer model.",
+    "Never substitute these dimensions for null measured geometry in hardware/rig.json."
+  ]
+}

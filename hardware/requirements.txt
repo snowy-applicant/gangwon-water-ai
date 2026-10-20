@@ -1,0 +1,2 @@
+# Only needed on the PC connected to Uno; server and JSONL mode use stdlib.
+pyserial>=3.5,<4

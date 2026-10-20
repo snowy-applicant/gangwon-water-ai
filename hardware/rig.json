@@ -1,0 +1,32 @@
+{
+  "id": "hose-height-rig-v1",
+  "domain": "rig",
+  "actuation": "hose outlet elevation",
+  "calibration_status": "not_calibrated",
+  "sources": ["A", "B"],
+  "regions": ["R1", "R3", "R2"],
+  "lines": [
+    {"id":"H1","source":"A","target":"R1","servo":"M1","pin":9,"command_id":"R1"},
+    {"id":"H2","source":"A","target":"R3","servo":"M2","pin":10,"command_id":"R3A"},
+    {"id":"H3","source":"B","target":"R3","servo":"M3","pin":11,"command_id":"R3B"},
+    {"id":"H4","source":"B","target":"R2","servo":"M4","pin":6,"command_id":"R2"}
+  ],
+  "channels": [
+    {"id":"F1","region":"R1","incoming":["H1"]},
+    {"id":"F3","region":"R3","incoming":["H2","H3"]},
+    {"id":"F2","region":"R2","incoming":["H4"]}
+  ],
+  "geometry": {
+    "tank_area_m2": {"A":null,"B":null},
+    "initial_volume_m3": {"A":null,"B":null},
+    "maximum_surface_height_m": {"A":null,"B":null},
+    "hose_length_m": {"H1":null,"H2":null,"H3":null,"H4":null},
+    "hose_inner_diameter_m": {"H1":null,"H2":null,"H3":null,"H4":null}
+  },
+  "notes": [
+    "Two H2/H3 inflows enter one R3 receiver; F3 alone measures their sum.",
+    "Calibrate H2 and H3 separately before simultaneous supply experiments.",
+    "Power loss is not a verified shutoff; provide an independent manual stop.",
+    "No geometric or time scale conversion to the Gangwon example network is assumed."
+  ]
+}

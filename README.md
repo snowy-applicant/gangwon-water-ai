@@ -2,11 +2,13 @@
 
 Python AI 모델과 실행 가능한 Python 알고리즘 웹 앱을 하나로 통합한 연구용 시스템입니다.
 
+이 저장소를 메인 프로젝트로 사용합니다. 호스 출구 높이를 조절하는 수조 2개·호스 4개·지역 용기 3개의 실험 장치 연결 코드는 `hardware/`에 있습니다. 기존 `resilient-water-ai`의 밸브 펌웨어를 v5 높이 조절 방식으로 수정했으며, 장치 실측은 강원도 예시 공급망과 분리해 저장합니다. [하드웨어 연결 순서와 PINN 실험 설계](docs/HARDWARE.md)를 먼저 확인하세요.
+
 **실제 운영에 사용하도록 검증된 시스템은 아닙니다.** NASA POWER 과거 기상 격자 추정 자료로 학습한 강수 부족 모델을 포함하며, 시설·관로·지형·사업장 원단위는 명시적인 가상 데이터입니다. 실제 공급 보장·수리 설계·시공 승인 기능은 없습니다.
 
 ## 두 가지 결과물
 
-1. **AI 모델**: `waterai/train.py`, `models/risk.json` (7·30·90일 보정 로지스틱 확률), `waterai/pinn.py`, `models/pinn.json` (물리 잔차 학습 신경망).
+1. **AI 모델**: `waterai/rig_pinn.py`, `models/rig-pinn.json`이 수조 2개·호스 4개·용기 3개의 **하드웨어용 핵심 PINN**입니다. 시간별 공급량·유량을 물리 손실로 실제 학습했으며 현재 가중치는 합성 치수 사전 학습 단계입니다. [모델 범위·오차·실측 재학습](docs/RIG_PINN.md)을 확인하세요. `waterai/train.py`/`models/risk.json`은 7·30·90일 강수 부족 모델, 기존 `waterai/pinn.py`/`models/pinn.json`은 단일 압력 관로 비교 벤치마크입니다.
 2. **Python 실행 웹 앱**: `web/`에서 Pyodide + SciPy로 동일한 `waterai/core.py`를 브라우저에서 직접 실행. `waterai/server.py`는 관리자 인증·SQLite 신고·실행 이력·계획 상태 API를 제공합니다.
 
 사이트: https://gangwon-water-ai.pearlystoat128.chatgpt.site (기본 본인 전용 접근, 정적 실행 모드).
@@ -32,7 +34,8 @@ python -m waterai.train --fetch    # NASA 공개 자료 다시 수집 + 학습
 python -m waterai.train --csv data/weather.csv
 python -m waterai.train --csv data/weather.csv.gz  # GitHub 제공 압축 자료
 pip install torch
-python -m waterai.pinn
+python -m waterai.rig_pinn        # 하드웨어 그래프의 물수지·유량 PINN
+python -m waterai.pinn            # 기존 단일 압력 관로 비교 벤치마크
 python -m waterai.build           # 모델/엔진을 웹 자산에 동기화
 ```
 
@@ -45,7 +48,8 @@ python -m waterai.build           # 모델/엔진을 웹 자산에 동기화
 - **배분**: 손실 있는 전역 네트워크 선형계획. 필수 수요 충족 → 총 공급량 → 비용의 3단계 사전식 최적화. 공유 공급원 제약을 동시에 반영합니다.
 - **디지털 트윈**: 48개 시간 단계에서 저수량·유입량·시설 용량·관로 용량·물 손실을 재계산. 누적 필수 충족률과 최초 부족 시간을 분리합니다.
 - **물리**: 압력 관로 Hazen–Williams / 개방형 수로 Manning. 고정 노드 수두를 가정하며 비선형 압력 관망 해석, 펌프 운영, 충수 시간, 수격은 포함하지 않습니다. 따라서 48시간 결과는 물량 가용성 평가이며 도착 시간 보장이 아닙니다.
-- **PINN**: 정상 관로 무차원 수두 손실에 대해 `dh/dx + q^1.852 = 0`과 경계조건을 학습. 해석식이 정확하고 더 저렴하므로 운영 계산은 해석식 우선. 저수지/개방형 수로에 압력 관로 PINN을 적용하지 않습니다.
+- **하드웨어 PINN**: 호스별 누적량·유량을 신경망으로 추정하고 `dC/dt=q`, 수조 물수지와 높이 차에 따른 준정상 유량 손실을 함께 학습합니다. 현재 합성 시험 48조건에서 용기 물량 RMSE 약 1.573mL, 호스 유량 RMSE 약 0.0447mL/s이며 실측 정확도가 아닙니다. 실제 힘 센서 자료의 계수 보정·관측 손실 재학습 경로를 제공합니다. 서보를 자동 제어하거나 강원도 관망에 자동 대입하지 않습니다.
+- **비교용 PINN**: 기존 정상 압력 관로 무차원 수두 손실의 `dh/dx + q^1.852 = 0`과 경계조건 학습은 별도 벤치마크입니다. 48시간 강원도 배분 계산은 기존 수리식·LP를 사용합니다.
 - **보강**: 필수 수요 부족 상위 3개 지역 × 가상 공급원 후보. 가상 GIS의 A* 격자 경로를 구한 뒤 후보를 추가해 전체 48시간 재최적화. 전체 부족 감소가 없는 후보 제외. 후보는 개별 평가이며 효과 합산 불가. 현재 GIS 격자는 실제 지형에 정합되지 않았으므로 실제 경로 설계가 아닙니다.
 - **긴급 신고**: 위험 확률과 독립된 대응 점수. 동일 신고자·지역 24시간 중복 방지. 정적 사이트는 기기 로컬 데모이며 관리자에게 전송되지 않습니다. Python 서버 모드는 중앙 저장과 관리자 조회를 지원합니다.
 
@@ -70,6 +74,8 @@ PINN의 해석식 대비 무차원 RMSE 0.00795, MAE 0.00567입니다. 가상 �
 `waterai/` Python 모델·엔진·서버, `models/` 학습 산출물, `data/` 분리 데이터,
 `web/` 브라우저 실행 화면, `tests/` 질량 보존·공유 공급원·우선순위·재현성 검증,
 `docs/` 범위·스키마·요구사항 추적입니다.
+
+`hardware/rig.json`은 사용자가 제시한 제작 계획의 연결 관계이며 미측정 치수는 `null`입니다. `hardware/firmware/water_rig/water_rig.ino`는 Uno 제어, `hardware/bridge.py`는 USB 상태/JSONL 실측을 메인 Python 서버로 전송합니다. `WATERAI_SENSOR_TOKEN`으로 장치 쓰기 권한을, `WATERAI_ADMIN_TOKEN`으로 관리자 조회 권한을 구분합니다. 서버의 SQLite DB는 영구 볼륨에 보관해야 하며 정적 Sites 호스팅에는 이 API가 없습니다. 하드웨어 화면은 수신·기록용이며 기존 48시간 강원도 계산이나 PINN 학습을 자동 실행하지 않습니다.
 
 정적 호스팅은 `python -m waterai.runtime` 후 `web/`를 배포하면 됩니다. 공식 배포 파일을 사이트와 같은 출처에서 제공하며 NumPy·SciPy wheel SHA256을 공식 lock과 검증합니다. 모델 학습은 서버/로컬 CPython에서 수행합니다. 정적 호스팅에는 서버 API가 없으므로 중앙 신고·관리자 접근 제어·이력 공유는 Python 서버 배포가 필요합니다. Dockerfile을 제공합니다. Sites 배포용 `.openai/hosting.json`은 사이트 식별자이며 비밀값이 아닙니다. GitHub 코드 수정이 Sites에 자동 배포되지는 않습니다. 큰 런타임 배포 파일은 GitHub 소스에서 제외되며 위 명령으로 재현합니다.
 

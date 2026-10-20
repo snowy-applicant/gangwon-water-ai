@@ -21,3 +21,7 @@
 `kind=open`의 추가 필드는 `channel_width_m`, `channel_depth_m`, `manning_n`입니다. 실제 수심/단면 자료를 넣어야 하며 미입력 기본값은 시험용입니다. 좌표는 WGS84, 면적은 m², 비용은 원, 날짜는 ISO 8601입니다.
 
 브라우저에 노드·관로 JSON을 올리면 유효성을 검사하고 실행합니다. 사설 이용자 주소나 신고 자료를 정적 파일에 포함하지 마세요. `provenance=observed`는 이용자가 실제 근거를 확인한 경우에만 사용하세요.
+
+## 별도 하드웨어 PINN 데이터
+
+`hardware/rig.json`은 실제 제작 계획의 연결 관계이며 치수는 미측정 `null`이다. `data/rig_reference.json`은 합성 사전 학습 치수(`rig-hydraulics/1`)로 이를 덮어쓰지 않는다. `models/rig-pinn.json`은 `hose-height-ode-pinn-v1` 신경망 가중치·학습 범위·검증 수치다. raw `rig-observations/1` 힘(N) 관측과 `rig-calibration/1` 실험 설명을 결합해 실제 계수 보정과 용기 관측 손실 재학습에 사용할 수 있다. 실험 데이터와 보정 결과의 기본 저장 위치는 Git 제외 `runtime/`다. [전체 계약과 명령](RIG_PINN.md)을 참고한다.

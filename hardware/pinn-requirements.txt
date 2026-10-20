@@ -1,0 +1,2 @@
+# Training only. Serving saved weights uses existing NumPy, not PyTorch.
+torch>=2.6,<3
