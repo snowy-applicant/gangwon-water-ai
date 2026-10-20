@@ -18,8 +18,8 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-python -m waterai.build
 python -m waterai.runtime  # 공식 Pyodide·NumPy·SciPy 최초 다운로드
+python -m waterai.build
 python -m waterai.server
 # http://127.0.0.1:8000
 ```

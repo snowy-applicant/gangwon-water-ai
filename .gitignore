@@ -7,3 +7,4 @@ runtime/
 *.zip
 !web/pyodide/python_stdlib.zip
 *.log
+dist/
