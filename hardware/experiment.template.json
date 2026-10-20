@@ -1,0 +1,210 @@
+{
+  "schema": "rig-calibration/1",
+  "dataset_type": "observed",
+  "note": "Fill measured geometry, actual experiment windows and force calibration. Hose coefficients below are INITIAL GUESSES, not measured values.",
+  "physics": {
+    "schema": "rig-hydraulics/1",
+    "network_id": "hose-height-rig-v1",
+    "provenance": "REPLACE_WITH_MEASURED_GEOMETRY_DESCRIPTION",
+    "calibrated_on_observations": false,
+    "tank_area_m2": [
+      null,
+      null
+    ],
+    "tank_datum_m": [
+      null,
+      null
+    ],
+    "hose_coefficient_m2_5_s": [
+      1e-05,
+      1e-05,
+      1e-05,
+      1e-05
+    ],
+    "domain": {
+      "duration_s": 60.0,
+      "initial_volume_ml": [
+        1200.0,
+        2400.0
+      ],
+      "outlet_height_m": [
+        0.1,
+        0.45
+      ],
+      "open_mask": [
+        0,
+        1
+      ]
+    },
+    "assumptions": [
+      "No receiver drainage or tank refills during each fixed-height run.",
+      "Use measured, primed-hose calibration only."
+    ]
+  },
+  "runs": [
+    {
+      "id": "H1-only",
+      "start_at": "REPLACE_WITH_ACTUAL_ISO8601_TIME_WITH_TIMEZONE",
+      "duration_s": 60,
+      "initial_volume_ml": [
+        null,
+        null
+      ],
+      "outlet_height_m": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "open_mask": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "force_calibration": {
+        "F1": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F3": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F2": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        }
+      }
+    },
+    {
+      "id": "H2-only",
+      "start_at": "REPLACE_WITH_ACTUAL_ISO8601_TIME_WITH_TIMEZONE",
+      "duration_s": 60,
+      "initial_volume_ml": [
+        null,
+        null
+      ],
+      "outlet_height_m": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "open_mask": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "force_calibration": {
+        "F1": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F3": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F2": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        }
+      }
+    },
+    {
+      "id": "H3-only",
+      "start_at": "REPLACE_WITH_ACTUAL_ISO8601_TIME_WITH_TIMEZONE",
+      "duration_s": 60,
+      "initial_volume_ml": [
+        null,
+        null
+      ],
+      "outlet_height_m": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "open_mask": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "force_calibration": {
+        "F1": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F3": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F2": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        }
+      }
+    },
+    {
+      "id": "H4-only",
+      "start_at": "REPLACE_WITH_ACTUAL_ISO8601_TIME_WITH_TIMEZONE",
+      "duration_s": 60,
+      "initial_volume_ml": [
+        null,
+        null
+      ],
+      "outlet_height_m": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "open_mask": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "force_calibration": {
+        "F1": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F3": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        },
+        "F2": {
+          "device_id": "REPLACE_WITH_DEVICE_ID",
+          "tare_n": null,
+          "direction": 1,
+          "density_kg_m3": 1000.0
+        }
+      }
+    }
+  ]
+}

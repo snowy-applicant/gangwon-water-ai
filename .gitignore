@@ -2,6 +2,9 @@ __pycache__/
 *.pyc
 .venv/
 .env
+.env.*
+!.env.example
+web/pyodide/
 runtime/
 .sites.local/
 *.zip

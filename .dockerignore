@@ -2,4 +2,7 @@
 runtime
 __pycache__
 .env
+.env.*
+!.env.example
+.venv
 .sites.local
