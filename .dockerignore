@@ -1,0 +1,5 @@
+.git
+runtime
+__pycache__
+.env
+.sites.local

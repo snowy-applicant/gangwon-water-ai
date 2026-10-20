@@ -1,0 +1,23 @@
+{
+  "51110": {
+    "rainfall_30d_mm": 29.56,
+    "temperature_c": -12.24,
+    "month": 12,
+    "date": "2025-12-31",
+    "provenance": "NASA POWER gridded estimate"
+  },
+  "51150": {
+    "rainfall_30d_mm": 15.94,
+    "temperature_c": -3.39,
+    "month": 12,
+    "date": "2025-12-31",
+    "provenance": "NASA POWER gridded estimate"
+  },
+  "51190": {
+    "rainfall_30d_mm": 22.77,
+    "temperature_c": -9.58,
+    "month": 12,
+    "date": "2025-12-31",
+    "provenance": "NASA POWER gridded estimate"
+  }
+}

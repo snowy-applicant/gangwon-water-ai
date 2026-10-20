@@ -1,0 +1,85 @@
+{
+  "sources": [
+    {
+      "region_id": "51110",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M&community=AG&latitude=37.8813&longitude=127.7298&start=20150101&end=20251231&format=JSON",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Daily Data",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Daily API"
+        },
+        "sources": [
+          "MERRA2"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20150101",
+        "end": "20251231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.73,
+          37.881,
+          323.87
+        ]
+      }
+    },
+    {
+      "region_id": "51150",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M&community=AG&latitude=37.7519&longitude=128.8761&start=20150101&end=20251231&format=JSON",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Daily Data",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Daily API"
+        },
+        "sources": [
+          "MERRA2"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20150101",
+        "end": "20251231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.876,
+          37.752,
+          203.02
+        ]
+      }
+    },
+    {
+      "region_id": "51190",
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M&community=AG&latitude=37.1641&longitude=128.9856&start=20150101&end=20251231&format=JSON",
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Daily Data",
+        "api": {
+          "version": "v2.10.0",
+          "name": "POWER Daily API"
+        },
+        "sources": [
+          "MERRA2"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20150101",
+        "end": "20251231"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.986,
+          37.164,
+          558.3
+        ]
+      }
+    }
+  ],
+  "retrieved_at": "2026-10-20T13:42:18.532213+00:00",
+  "spatial_resolution": "Native POWER meteorological grid, not station observations",
+  "missing": "missing rows omitted; windows with gaps rejected"
+}
